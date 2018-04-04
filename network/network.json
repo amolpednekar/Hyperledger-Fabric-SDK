@@ -1,0 +1,104 @@
+{
+    "fabric": {
+      "cryptodir": "network/crypto-config",
+      "network": {
+        "orderer": {
+          "url": "grpcs://10.244.5.41:7050",
+          "mspid": "OrdererMSP",
+          "msp": "network/crypto-config/ordererOrganizations/example.com/msp/",
+          "server-hostname": "orderer.example.com",
+          "tls_cacerts": "network/crypto-config/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
+        },
+        "org1": {
+          "name": "peerOrg1",
+          "mspid": "Org1MSP",
+          "msp": "network/crypto-config/peerOrganizations/org1.example.com/msp/",
+          "ca": {
+            "url": "https://10.244.5.41:7054",
+            "name": "ca-org1",
+            "tls_cacerts":"network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
+          },
+          "peer1": {
+            "requests": "grpcs://10.244.5.41:7051",
+            "events": "grpcs://10.244.5.41:7053",
+            "server-hostname": "peer0.org1.example.com",
+            "tls_cacerts": "network/crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt"
+          },
+          "peer2": {
+            "requests": "grpcs://10.244.5.41:7057",
+            "events": "grpcs://10.244.5.41:7059",
+            "server-hostname": "peer1.org1.example.com",
+            "tls_cacerts": "network/crypto-config/peerOrganizations/org1.example.com/peers/peer1.org1.example.com/tls/ca.crt"
+          },
+                  "adminCryptoPath": {
+                      "certPath":"peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts",
+                      "keyPath":"peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore"
+                  }
+        },
+        "org2": {
+          "name": "peerOrg2",
+          "mspid": "Org2MSP",
+          "msp": "network/crypto-config/peerOrganizations/org2.example.com/msp/",
+          "ca": {
+            "url": "https://10.244.5.41:8054",
+            "name": "ca-org2",
+            "tls_cacerts":"network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem"
+          },
+          "peer1": {
+            "requests": "grpcs://10.244.5.41:8051",
+            "events": "grpcs://10.244.5.41:8053",
+            "server-hostname": "peer0.org2.example.com",
+            "tls_cacerts": "network/crypto-config/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt"
+          },
+          "peer2": {
+            "requests": "grpcs://10.244.5.41:8057",
+            "events": "grpcs://10.244.5.41:8059",
+            "server-hostname": "peer1.org2.example.com",
+            "tls_cacerts": "network/crypto-config/peerOrganizations/org2.example.com/peers/peer1.org2.example.com/tls/ca.crt"
+          },
+                  "adminCryptoPath": {
+                      "certPath":"peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts",
+                      "keyPath":"peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore"
+                  }
+        }
+      },
+      "channel": [
+        {
+          "name": "mychannel",
+          "config": "network/mychannel.tx",
+          "organizations": ["org1", "org2"],
+          "deployed": false
+        }
+      ],
+      "chaincodes": [{
+        "id": "simple",
+        "version": "v0",
+        "channel": "mychannel1",
+        "language":"golang",
+        "path": "contract/fabric/simple"
+      }],
+      "endorsement-policy": {
+        "identities": [
+          {
+            "role": {
+              "name": "member",
+              "mspId": "Org1MSP"
+            }
+          },
+          {
+            "role": {
+              "name": "member",
+              "mspId": "Org2MSP"
+            }
+          },
+          {
+            "role": {
+              "name": "admin",
+              "mspId": "Org1MSP"
+            }
+          }
+        ],
+        "policy": { "2-of": [{"signed-by": 0}, {"signed-by": 1}]}
+      }
+    }
+  }

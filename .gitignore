@@ -1,0 +1,5 @@
+node_modules
+.vscode
+src/lib/hfc-key-store
+network/crypto-config/*
+!network/crypto-config/.gitkeep
