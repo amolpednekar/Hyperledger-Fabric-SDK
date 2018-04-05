@@ -86,15 +86,15 @@ const enrollAdmin = (enrollmentId, enrollmentSecret, mspId) => {
 
 //Test Code
 
-// (async () => {
-//     await initAdmin(store_path, 'https://10.80.64.237:7054', "org1")
-//     const admin = await fetchAdmin(fabric_client, "admin", true);
-//     if (!admin) {
-//         await enrollAdmin("admin", "adminpw", "Org1MSP")
-//     }
-// })()
-//     .catch((err) => {
-//         console.log("err", err);
-//     });
+(async () => {
+    await initAdmin(store_path, 'http://10.80.64.237:7054', "org1")
+    const admin = await fetchAdmin(fabric_client, "admin", true);
+    if (!admin) {
+        await enrollAdmin("admin", "adminpw", "Org1MSP")
+    }
+})()
+    .catch((err) => {
+        console.log("err", err);
+    });
 
 module.exports = { initAdmin, fetchAdmin, enrollAdmin }

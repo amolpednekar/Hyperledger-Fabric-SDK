@@ -124,13 +124,13 @@ const enrollUser = (enrollmentID, enrollmentSecret, mspId) => {
 
 (async () => {
     var store_path = path.join(__dirname, 'hfc-key-store');
-    await initUser(store_path, 'https://10.80.64.237:7054', "org2")
+    await initUser(store_path, 'http://10.80.64.237:7054', "org1")
     const admin = await adminLib.fetchAdmin(fabric_client, "admin", true);
     // console.log(admin);
     //const user = await fetchUser("user9");
    // if (!user) {
-    //await registerAndEnrollUser("user13", "secret", admin, "Org2MSP")
-       await enrollUser("user13", "secret", "Org2MSP")
+    //await registerAndEnrollUser("user1", "secret", admin, "Org1MSP")
+    //await enrollUser("user13", "secret", "Org2MSP")
    // }
 
 
